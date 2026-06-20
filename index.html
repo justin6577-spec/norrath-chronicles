@@ -10,45 +10,56 @@
 <link rel="manifest" href="manifest.json">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:system-ui,sans-serif;background:#0a0a1a;color:#d4c49a;touch-action:manipulation;overflow:hidden;height:100dvh}
+body{font-family:system-ui,sans-serif;background:#0a0a1a;color:#d4c49a;touch-action:manipulation;overflow:hidden;height:100dvh;font-size:14px}
 #game{max-width:480px;margin:0 auto;height:100dvh;display:flex;flex-direction:column}
-.screen{display:none;flex:1;overflow-y:auto;padding:12px}
+.screen{display:none;flex:1;overflow-y:auto;padding:10px 12px}
 .screen.active{display:block}
-h1{font-size:1.3em;text-align:center;color:#f0d870;text-shadow:0 0 10px #f0d87040;padding:8px 0}
-h2{font-size:1em;color:#f0d870;margin:10px 0 6px}
-.btn{display:block;width:100%;padding:12px;margin:4px 0;background:linear-gradient(180deg,#2a1a3a,#1a0a2a);border:1px solid #4a3a5a;border-radius:8px;color:#d4c49a;font-size:.9em;cursor:pointer;transition:all .15s}
+h1{font-size:1.2em;text-align:center;color:#f0d870;text-shadow:0 0 10px #f0d87040;padding:6px 0}
+h2{font-size:.95em;color:#f0d870;margin:10px 0 4px}
+h3{font-size:.85em}
+.btn{display:block;width:100%;padding:11px;margin:4px 0;background:linear-gradient(180deg,#2a1a3a,#1a0a2a);border:1px solid #4a3a5a;border-radius:8px;color:#d4c49a;font-size:.85em;cursor:pointer;transition:all .15s;text-align:left;min-height:44px}
 .btn:active{background:#3a2a4a;transform:scale(.98)}
 .btn.gold{background:linear-gradient(180deg,#5a4a1a,#3a2a0a);border-color:#8a7a4a;color:#f0d870}
 .btn.red{background:linear-gradient(180deg,#5a1a1a,#3a0a0a);border-color:#8a3a3a;color:#ff6a6a}
 .btn.green{background:linear-gradient(180deg,#1a4a1a,#0a2a0a);border-color:#3a6a3a;color:#6aff6a}
 .btn:disabled{opacity:.35}
-.stat-row{display:flex;justify-content:space-between;padding:2px 0;font-size:.85em}
-.hp-bar{background:#1a0a0a;border:1px solid #3a1a1a;border-radius:4px;height:18px;margin:4px 0;overflow:hidden}
+.stat-row{display:flex;justify-content:space-between;padding:2px 0;font-size:.8em}
+.hp-bar{background:#1a0a0a;border:1px solid #3a1a1a;border-radius:4px;height:16px;margin:3px 0;overflow:hidden}
 .hp-fill{background:linear-gradient(90deg,#ff3a2a,#ff6a3a);height:100%;transition:width .2s}
-#enemyBar{background:#1a0a0a;border:1px solid #3a1a1a;border-radius:8px;padding:8px;margin:6px 0;text-align:center}
-#enemyBar h3{color:#ff6a4a;font-size:1em}
-#tapZone{background:linear-gradient(180deg,#1a2a1a,#0a1a0a);border:2px dashed #3a5a3a;border-radius:12px;padding:24px 16px;margin:6px 0;text-align:center;cursor:pointer;user-select:none;min-height:80px;display:flex;align-items:center;justify-content:center}
+.faction-bar{background:#1a0a0a;border:1px solid #333;border-radius:3px;height:10px;margin:1px 0;overflow:hidden}
+.faction-fill{height:100%;transition:width .3s}
+#enemyBar{background:#1a0a0a;border:1px solid #3a1a1a;border-radius:8px;padding:8px;margin:4px 0;text-align:center}
+#enemyBar h3{color:#ff6a4a;font-size:.95em}
+#tapZone{background:linear-gradient(180deg,#1a2a1a,#0a1a0a);border:2px dashed #3a5a3a;border-radius:12px;padding:20px 12px;margin:4px 0;text-align:center;cursor:pointer;user-select:none;min-height:70px;display:flex;align-items:center;justify-content:center}
 #tapZone:active,#tapZone.auto{background:#2a3a2a}
-#tapZone .sword{font-size:2.5em;transition:transform .1s}
+#tapZone .sword{font-size:2.2em;transition:transform .1s}
 #tapZone:active .sword{transform:rotate(-15deg) scale(1.1)}
-.log{font-size:.75em;color:#6a6a8a;max-height:80px;overflow-y:auto;margin:4px 0}
-.log .dmg{color:#ff6a4a}.log .heal{color:#4aff4a}.log .xp{color:#f0d870}.log .lvl{color:#f0d870;font-weight:bold}.log .loot{color:#6aff6a}
+.log{font-size:.7em;color:#6a6a8a;max-height:60px;overflow-y:auto;margin:2px 0}
+.log .dmg{color:#ff6a4a}.log .heal{color:#4aff4a}.log .xp{color:#f0d870}.log .lvl{color:#f0d870;font-weight:bold}.log .loot{color:#6aff6a}.log .quest{color:#48f}.log .faction{color:#f0d870}.log .named{color:#a4f}
 .float{position:fixed;pointer-events:none;font-weight:bold;animation:floatUp .8s forwards;z-index:100}
 @keyframes floatUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-60px)}}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.grid2 .btn{font-size:.8em;padding:8px;text-align:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.grid2 .btn{font-size:.78em;padding:8px 6px;text-align:center}
 .cooldown{font-size:.7em;color:#ff8a4a}
-.bottom-bar{display:flex;gap:6px;margin:6px 0}
-.bottom-bar .btn{flex:1;font-size:.8em;text-align:center}
-.inv-item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2a2a3a;font-size:.8em}
-.shop-item{padding:8px;border:1px solid #3a3a4a;border-radius:6px;margin:4px 0;font-size:.85em}
+.bottom-bar{display:flex;gap:4px;margin:4px 0}
+.bottom-bar .btn{flex:1;font-size:.75em;text-align:center;padding:10px 4px}
+.inv-item{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #2a2a3a;font-size:.78em;gap:4px}
+.shop-item{padding:7px;border:1px solid #3a3a4a;border-radius:6px;margin:3px 0;font-size:.8em}
+.quest-card{padding:8px;border:1px solid #3a3a4a;border-radius:6px;margin:3px 0;font-size:.78em;background:#0f0f1f}
+.quest-card .objectives{color:#8a8aaa;font-size:.9em;margin:3px 0}
+.quest-card .reward{color:#f0d870;font-size:.85em}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1a1a3a;border:1px solid #4a4a8a;border-radius:8px;padding:10px 20px;z-index:200;font-size:.85em;animation:toastIn .3s,toastOut .3s 2.5s forwards;pointer-events:none}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes toastOut{from{opacity:1}to{opacity:0}}
+.npc-card{background:#0f0f1f;border:1px solid #3a3a4a;padding:8px;border-radius:6px;margin:4px 0;font-size:.8em}
+.rarity-c{color:#aaa}.rarity-u{color:#4a4}.rarity-r{color:#48f}.rarity-e{color:#a4f}
 </style>
 </head>
 <body>
 <div id="game">
 <div id="createScreen" class="screen active">
 <h1>⚔️ Norrath Chronicles</h1>
-<p style="text-align:center;color:#8a8aaa;margin-bottom:12px">Choose your destiny</p>
+<p style="text-align:center;color:#8a8aaa;margin-bottom:10px">Choose your destiny</p>
 <h2>Pick Your Race</h2>
 <div id="raceList" class="grid2"></div>
 <h2 style="display:none" id="classLabel">Pick Your Class</h2>
@@ -66,12 +77,12 @@ h2{font-size:1em;color:#f0d870;margin:10px 0 6px}
 
 <div id="enemyBar">
 <h3 id="enemyName">Rat</h3>
-<div class="stat-row"><span>Level <span id="enemyLevel">1</span></span></div>
+<div class="stat-row"><span>Level <span id="enemyLevel">1</span></span><span id="rareBadge" style="display:none;color:#a4f">👑 RARE</span></div>
 <div class="hp-bar"><div class="hp-fill" id="enemyHpBar" style="width:100%"></div></div>
 <div class="stat-row"><span>❤️ <span id="enemyHp">10</span>/<span id="enemyMaxHp">10</span></span><span>⚔️ <span id="enemyDmg">4</span></span></div>
 </div>
 
-<div id="tapZone"><div><div class="sword">⚔️</div><div style="color:#8a8aaa;font-size:.8em;margin-top:6px">TAP TO ATTACK</div></div></div>
+<div id="tapZone"><div><div class="sword">⚔️</div><div style="color:#8a8aaa;font-size:.75em;margin-top:4px">TAP TO ATTACK</div></div></div>
 
 <div class="stat-row"><span>XP: <span id="xpBar"></span></span><span><span id="xpCurrent">0</span>/<span id="xpNeeded">100</span></span></div>
 <div class="hp-bar"><div class="hp-fill" id="xpFill" style="width:0%;background:linear-gradient(90deg,#f0d870,#ffd040)"></div></div>
@@ -81,9 +92,13 @@ h2{font-size:1em;color:#f0d870;margin:10px 0 6px}
 <button class="btn" id="autoBtn" onclick="toggleAuto()">🔄 AUTO: OFF</button>
 </div>
 <div class="bottom-bar">
-<button class="btn" id="zoneSelectBtn" onclick="switchScreen('zone')">🗺️ Zones</button>
-<button class="btn gold" id="invBtn" onclick="switchScreen('inv')">🎒 Inventory</button>
-<button class="btn green" id="shopBtn" onclick="switchScreen('shop')">🏪 Shop</button>
+<button class="btn" onclick="switchScreen('zone')">🗺️ Travel</button>
+<button class="btn gold" onclick="switchScreen('inv')">🎒 Items</button>
+<button class="btn green" onclick="switchScreen('shop')">🏪 Shop</button>
+</div>
+<div class="bottom-bar">
+<button class="btn" onclick="switchScreen('quest')">📜 Quests</button>
+<button class="btn" onclick="switchScreen('faction')">🏛️ Factions</button>
 </div>
 </div>
 
@@ -92,63 +107,156 @@ h2{font-size:1em;color:#f0d870;margin:10px 0 6px}
 <div id="invScreen" class="screen">
 <h1>🎒 Inventory</h1>
 <div id="invContent"><p style="color:#8a8aaa">No items yet. Kill enemies for loot!</p></div>
-<div class="stat-row" style="margin-top:8px"><span>💰 Gold: <span id="invGold">0</span></span><span>Kills: <span id="invKills">0</span></span></div>
+<div class="stat-row" style="margin-top:6px"><span>💰 Gold: <span id="invGold">0</span></span><span>Kills: <span id="invKills">0</span></span></div>
 <button class="btn red" onclick="switchScreen('game')">◀ Back</button>
 </div>
 
 <div id="shopScreen" class="screen">
 <h1>🏪 Merchant</h1>
+<div id="shopFaction" style="font-size:.75em;color:#8a8aaa;margin-bottom:4px"></div>
 <div id="shopContent"></div>
+<button class="btn red" onclick="switchScreen('game')">◀ Back</button>
+</div>
+
+<div id="questScreen" class="screen">
+<h1>📜 Quest Log</h1>
+<div id="dailySection"></div>
+<div id="questTabs" style="display:flex;gap:4px;margin:4px 0"><button class="btn" style="flex:1;text-align:center;padding:8px;font-size:.75em" onclick="renderQuestLog('active')">Active</button><button class="btn" style="flex:1;text-align:center;padding:8px;font-size:.75em" onclick="renderQuestLog('completed')">Done</button><button class="btn" style="flex:1;text-align:center;padding:8px;font-size:.75em" onclick="renderQuestLog('zone')">NPC Quests</button></div>
+<div id="questContent"></div>
+<button class="btn red" onclick="switchScreen('game')">◀ Back</button>
+</div>
+
+<div id="factionScreen" class="screen">
+<h1>🏛️ Faction Standing</h1>
+<div id="factionContent"></div>
 <button class="btn red" onclick="switchScreen('game')">◀ Back</button>
 </div>
 
 <div id="deathScreen" class="screen">
 <h1 style="color:#ff4a4a">💀 Defeated</h1>
-<p style="text-align:center;margin:12px">Your spirit returns to bind point...</p>
+<p style="text-align:center;margin:12px">Your spirit returns to its bind point...</p>
 <button class="btn gold" onclick="respawn()" style="text-align:center">Respawn</button>
 </div>
 </div>
 
 <script>
-// === DATABASE ===
-const GAMEDB = {"races":{"Barbarian":{"name":"Barbarian"},"Dark_Elf":{"name":"Dark Elf"},"Dwarf":{"name":"Dwarf"},"Erudite":{"name":"Erudite"},"Gnome":{"name":"Gnome"},"Half-Elf":{"name":"Half-Elf"},"Halfling":{"name":"Halfling"},"High_Elf":{"name":"High Elf"},"Human":{"name":"Human"},"Iksar":{"name":"Iksar"},"Ogre":{"name":"Ogre"},"Troll":{"name":"Troll"},"Wood_Elf":{"name":"Wood Elf"}},"classes":{"Bard":{"name":"Bard"},"Cleric":{"name":"Cleric"},"Druid":{"name":"Druid"},"Enchanter":{"name":"Enchanter"},"Magician":{"name":"Magician"},"Monk":{"name":"Monk"},"Necromancer":{"name":"Necromancer"},"Paladin":{"name":"Paladin"},"Ranger":{"name":"Ranger"},"Rogue":{"name":"Rogue"},"Shadow_Knight":{"name":"Shadow Knight"},"Shaman":{"name":"Shaman"},"Warrior":{"name":"Warrior"},"Wizard":{"name":"Wizard"}},"zones":{"1-5":{"name":"Starting Areas","zones":["Qeynos Hills","Everfrost Peaks","Misty Thicket","Greater Faydark","Innothule Swamp","Field of Bone","Steamfont Mountains","Butcherblock Mountains","Nektulos Forest","Toxxulia Forest"],"enemies":["Rat","Skeleton","Bat","Orc Pawn","Spiderling","Kobold Pup","Decaying Skeleton"]},"5-10":{"name":"Outskirts","zones":["Blackburrow","Crushbone","Befallen","The Warrens","Qeynos Aqueducts","Nektulos Forest"],"enemies":["Gnoll","Orc Centurion","Skeleton","Goblin Scout","Kobold","Giant Bat"]},"10-15":{"name":"Frontier Zones","zones":["Upper Guk","Estate of Unrest","Northern Desert of Ro","Southern Desert of Ro","Lake Rathetear","Erud's Crossing"],"enemies":["Froglok","Zombie","Mummy","Orc Oracle","Aviak","Goblin Warrior"]},"15-20":{"name":"Wilderness","zones":["Oasis of Marr","Highpass Hold","Permafrost","Gorge of King Xorbb","Lavastorm Mountains","Timorous Deep"],"enemies":["Crocodile","Orc Legionnaire","Goblin Shaman","Will-O-Wisp","Fire Elemental","Giant Spider"]},"20-25":{"name":"Deep Frontier","zones":["Najena","Ocean of Tears","South Karana","Lake of Ill Omen","Warsliks Woods","Mistmoore"],"enemies":["Efreeti","Spectre","Aviak Avocet","Goblin Warlord","Forest Giant","Vampire"]},"25-30":{"name":"Dungeon Depths","zones":["Cazic Thule","Lower Guk","Solusek's Eye","Tower of Frozen Shadow","Kaesora","Frontier Mountains"],"enemies":["Alligator","Froglok Knight","Goblin King","Shadow Beast","Spectral Warrior","Giant Skeleton"]},"30-35":{"name":"High Adventure","zones":["Mistmoore Castle","City of Mist","Emerald Jungle","Dreadlands","Crystal Caverns","Trakanon's Teeth"],"enemies":["Vampire Lord","Ghost","Gorilla","Drolvarg","Geonid","Wyvern"]},"35-40":{"name":"Dangerous Lands","zones":["Karnor's Castle","Old Sebilis","Howling Stones","Burning Woods","The Hole","Kedge Keep"],"enemies":["Drolvarg Warlord","Froglok Wizard","Spectral Lord","Dragon Whelp","Golem","Mermaid"]},"40-45":{"name":"Epic Grounds","zones":["Plane of Fear","Plane of Hate","Western Wastes","Temple of Veeshan","Siren's Grotto","Dragon Necropolis"],"enemies":["Nightmare","Innoruuk's Minion","Frost Giant","Dragon","Siren","Skeleton Dragon"]},"45-50":{"name":"The Planes","zones":["Plane of Sky","Plane of Growth","Plane of Mischief","Veeshan's Peak","Sleeper's Tomb","Kael Drakkel"],"enemies":["Djinn","Treant","Trickster Spirit","Elder Dragon","Ancient Wyrm","Frost Giant King"]}},"class_race_map":{"Warrior":["Human","Barbarian","Dark_Elf","Dwarf","Gnome","Half-Elf","Halfling","Iksar","Ogre","Troll","Wood_Elf"],"Cleric":["Human","Dark_Elf","Dwarf","Erudite","Gnome","Halfling","High_Elf"],"Paladin":["Human","Dwarf","Erudite","Half-Elf","High_Elf"],"Ranger":["Human","Half-Elf","Halfling","Wood_Elf"],"Shadow_Knight":["Human","Dark_Elf","Erudite","Iksar","Ogre","Troll"],"Druid":["Human","Half-Elf","Halfling","Wood_Elf"],"Monk":["Human","Iksar"],"Bard":["Human","Half-Elf","Wood_Elf"],"Rogue":["Human","Barbarian","Dark_Elf","Dwarf","Gnome","Half-Elf","Halfling","Wood_Elf"],"Shaman":["Barbarian","Iksar","Ogre","Troll"],"Necromancer":["Human","Dark_Elf","Erudite","Gnome","Iksar"],"Wizard":["Human","Dark_Elf","Erudite","Gnome","High_Elf"],"Magician":["Human","Dark_Elf","Erudite","Gnome","High_Elf"],"Enchanter":["Human","Dark_Elf","Erudite","Gnome","High_Elf"]},"class_stats":{"Warrior":{"str":20,"sta":20,"agi":15,"dex":15,"wis":10,"int":5,"hp_per_lvl":12},"Paladin":{"str":18,"sta":18,"agi":12,"dex":12,"wis":18,"int":10,"hp_per_lvl":10},"Shadow_Knight":{"str":18,"sta":18,"agi":12,"dex":12,"wis":10,"int":18,"hp_per_lvl":10},"Ranger":{"str":15,"sta":15,"agi":18,"dex":18,"wis":15,"int":10,"hp_per_lvl":9},"Monk":{"str":18,"sta":15,"agi":18,"dex":18,"wis":15,"int":10,"hp_per_lvl":9},"Rogue":{"str":15,"sta":15,"agi":20,"dex":20,"wis":10,"int":10,"hp_per_lvl":8},"Bard":{"str":14,"sta":14,"agi":16,"dex":16,"wis":14,"int":14,"hp_per_lvl":7},"Shaman":{"str":14,"sta":16,"agi":12,"dex":12,"wis":20,"int":10,"hp_per_lvl":7},"Cleric":{"str":14,"sta":14,"agi":12,"dex":12,"wis":20,"int":10,"hp_per_lvl":7},"Druid":{"str":12,"sta":14,"agi":14,"dex":14,"wis":20,"int":10,"hp_per_lvl":7},"Necromancer":{"str":10,"sta":12,"agi":14,"dex":14,"wis":10,"int":20,"hp_per_lvl":5},"Wizard":{"str":10,"sta":12,"agi":14,"dex":14,"wis":10,"int":20,"hp_per_lvl":5},"Magician":{"str":10,"sta":12,"agi":14,"dex":14,"wis":10,"int":20,"hp_per_lvl":5},"Enchanter":{"str":10,"sta":12,"agi":14,"dex":14,"wis":10,"int":20,"hp_per_lvl":5}}};
-const ITEMS = [
-{name:"Rusty Sword",type:"weapon",atk:3,cost:10,slot:"weapon"},
-{name:"Cloth Cap",type:"armor",def:2,cost:8,slot:"head"},
-{name:"Leather Tunic",type:"armor",def:3,cost:15,slot:"chest"},
-{name:"Iron Bracer",type:"armor",def:2,cost:12,slot:"arms"},
-{name:"Bone Shield",type:"armor",def:4,cost:25,slot:"offhand"},
-{name:"Healing Potion",type:"consumable",heal:50,cost:20},
-{name:"Minor Rune",type:"consumable",atk:3,dur:60,cost:30},
-{name:"Fine Steel Sword",type:"weapon",atk:7,cost:50,slot:"weapon"},
-{name:"Banded Mail",type:"armor",def:6,cost:45,slot:"chest"},
-{name:"Enchanted Circlet",type:"armor",def:3,atk:2,cost:60,slot:"head"},
+// ══════════════════ DATABASE ══════════════════
+const GAMEDB={"races":{"Barbarian":{name:"Barbarian"},"Dark_Elf":{name:"Dark Elf"},"Dwarf":{name:"Dwarf"},"Erudite":{name:"Erudite"},"Gnome":{name:"Gnome"},"Half-Elf":{name:"Half-Elf"},"Halfling":{name:"Halfling"},"High_Elf":{name:"High Elf"},"Human":{name:"Human"},"Iksar":{name:"Iksar"},"Ogre":{name:"Ogre"},"Troll":{name:"Troll"},"Wood_Elf":{name:"Wood Elf"}},"classes":{"Bard":{name:"Bard"},"Cleric":{name:"Cleric"},"Druid":{name:"Druid"},"Enchanter":{name:"Enchanter"},"Magician":{name:"Magician"},"Monk":{name:"Monk"},"Necromancer":{name:"Necromancer"},"Paladin":{name:"Paladin"},"Ranger":{name:"Ranger"},"Rogue":{name:"Rogue"},"Shadow_Knight":{name:"Shadow Knight"},"Shaman":{name:"Shaman"},"Warrior":{name:"Warrior"},"Wizard":{name:"Wizard"}},"zones":{"1-5":{name:"Starting Areas",zones:["Qeynos Hills","Everfrost Peaks","Misty Thicket","Greater Faydark","Innothule Swamp","Field of Bone","Steamfont Mountains","Butcherblock Mountains","Nektulos Forest","Toxxulia Forest"],enemies:["Rat","Skeleton","Bat","Orc Pawn","Spiderling","Kobold Pup","Decaying Skeleton"]},"5-10":{name:"Outskirts",zones:["Blackburrow","Crushbone","Befallen","The Warrens","Qeynos Aqueducts","Nektulos Forest"],enemies:["Gnoll","Orc Centurion","Skeleton","Goblin Scout","Kobold","Giant Bat"]},"10-15":{name:"Crushbone Keep ⚔",zones:["Crushbone Keep","Crushbone Throneroom","Keep Courtyard"],enemies:["Orc Legionnaire","Orc Oracle","Orc Taskmaster","Elite Guard","Crushbone Emissary"],named:["Emperor Crush","Ambassador D'Vinn","Orc Trainer","Lord Darish"]},"15-20":{name:"Guk Depths ⚔",zones:["Upper Guk","Guk Depths","Ancient Guk"],enemies:["Froglok Squire","Froglok Necromancer","Ghoul","Cave Basilisk","Moss Snake"],named:["Froglok King","Frenzied Ghoul","Tentacle Terror"]},"20-25":{name:"Solusek's Eye ⚔",zones:["Solusek's Eye","Lavastorm Depths","Fire Giant Lair"],enemies:["Fire Imp","Lava Drake","Fire Giant","Fire Elemental","Magma Worm"],named:["Lord Nagafen","Solusek Champion","Efreeti Lord"]},"25-30":{name:"Deep Frontier",zones:["Najena","Ocean of Tears","South Karana","Lake of Ill Omen","Warsliks Woods","Mistmoore"],enemies:["Efreeti","Spectre","Aviak Avocet","Giant Skeleton","Shadow Beast","Gargoyle"]},"30-35":{name:"Perilous Lands",zones:["Lower Guk","Rathe Mountains","Kithicor Forest","Cazic-Thule","Feerrott","Everfrost"],enemies:["Minotaur","Hill Giant","Werewolf","Dark Elf Guard","Ice Giant","Evil Eye"]},"35-40":{name:"Dangerous Lands",zones:["Dreadlands","Burning Woods","Skyfire","Emerald Jungle","Trakanon's Teeth","Firiona Vie"],enemies:["Drachnid","Drolvarg","Wurm","Kunzar","Sarnak","Chokidai"]},"40-45":{name:"Epic Zones",zones:["City of Mist","Karnor's Castle","Howling Stones","Sebilis","Chardok","Dragon Necropolis"],enemies:["Iksar Ghost","Drolvarg Captain","Golem","Dark Enchanter","Dragon Whelp"]},"45-60":{name:"Raid Territories",zones:["Plane of Fear","Plane of Hate","Veeshan's Peak","Temple of Veeshan","Sleeper's Tomb","Plane of Time"],enemies:["Nightmare","Cazic's Golem","Drake","Wurm Lord","Ancient Dragon"]}}};
+
+const ITEMS=[
+{name:"Rusty Sword",type:"weapon",atk:3,cost:10,slot:"weapon",rarity:"c"},
+{name:"Cloth Cap",type:"armor",def:2,cost:8,slot:"head",rarity:"c"},
+{name:"Cloth Tunic",type:"armor",def:2,cost:10,slot:"chest",rarity:"c"},
+{name:"Cloth Bracer",type:"armor",def:1,cost:6,slot:"arms",rarity:"c"},
+{name:"Wooden Shield",type:"armor",def:3,cost:18,slot:"offhand",rarity:"c"},
+{name:"Healing Potion",type:"consumable",heal:50,cost:20,rarity:"c"},
+{name:"Minor Rune",type:"consumable",atk:3,dur:60,cost:30,rarity:"u"},
+{name:"Fine Steel Sword",type:"weapon",atk:7,cost:50,slot:"weapon",rarity:"u"},
+{name:"Banded Mail",type:"armor",def:6,cost:45,slot:"chest",rarity:"u"},
+{name:"Leather Tunic",type:"armor",def:4,cost:25,slot:"chest",rarity:"u"},
+{name:"Leather Cap",type:"armor",def:3,cost:20,slot:"head",rarity:"u"},
+{name:"Leather Bracer",type:"armor",def:2,cost:15,slot:"arms",rarity:"u"},
+{name:"Chain Coif",type:"armor",def:5,cost:35,slot:"head",rarity:"u"},
+{name:"Chain Tunic",type:"armor",def:7,cost:55,slot:"chest",rarity:"r"},
+{name:"Chain Bracer",type:"armor",def:4,cost:30,slot:"arms",rarity:"u"},
+{name:"Chain Leggings",type:"armor",def:5,cost:40,slot:"legs",rarity:"u"},
+{name:"Plate Helm",type:"armor",def:8,cost:70,slot:"head",rarity:"r"},
+{name:"Plate Breastplate",type:"armor",def:10,cost:100,slot:"chest",rarity:"r"},
+{name:"Plate Gauntlets",type:"armor",def:6,cost:55,slot:"arms",rarity:"r"},
+{name:"Plate Greaves",type:"armor",def:7,cost:65,slot:"legs",rarity:"r"},
+{name:"Enchanted Circlet",type:"armor",def:3,atk:2,cost:80,slot:"head",rarity:"r"},
+{name:"Enchanted Sword",type:"weapon",atk:12,cost:120,slot:"weapon",rarity:"r"},
+{name:"Runed Staff",type:"weapon",atk:10,cost:110,slot:"weapon",rarity:"r",cls:"Wizard"},
+{name:"Runed Blade",type:"weapon",atk:14,cost:140,slot:"weapon",rarity:"e"},
+{name:"Runed Breastplate",type:"armor",def:13,cost:150,slot:"chest",rarity:"e"},
+{name:"Wizard Staff",type:"weapon",atk:14,def:3,cost:180,slot:"weapon",rarity:"e",cls:"Wizard"},
+{name:"Shadow Dagger",type:"weapon",atk:15,cost:160,slot:"weapon",rarity:"e",cls:"Rogue"},
+{name:"Holy Avenger",type:"weapon",atk:16,def:4,cost:200,slot:"weapon",rarity:"e",cls:"Paladin"},
+{name:"Nature's Bow",type:"weapon",atk:13,def:2,cost:170,slot:"weapon",rarity:"e",cls:"Ranger"},
+{name:"Necrotic Wand",type:"weapon",atk:14,cost:160,slot:"weapon",rarity:"e",cls:"Necromancer"},
+{name:"Large Shield",type:"armor",def:10,cost:90,slot:"offhand",rarity:"r"},
+{name:"Darksteel Shield",type:"armor",def:14,atk:2,cost:160,slot:"offhand",rarity:"e"},
+{name:"Crushbone Belt",type:"armor",def:3,atk:1,cost:45,slot:"waist",rarity:"u"},
+{name:"Guk Scale Bracer",type:"armor",def:6,atk:2,cost:75,slot:"arms",rarity:"r"},
+{name:"Fire Giant Helm",type:"armor",def:9,atk:3,cost:130,slot:"head",rarity:"r"},
+{name:"Bone Shield",type:"armor",def:4,cost:25,slot:"offhand",rarity:"u"},
+{name:"Enchanted Boots",type:"armor",def:5,agi:3,cost:85,slot:"feet",rarity:"r"},
+{name:"Dragon Cloak",type:"armor",def:8,atk:4,cost:200,slot:"back",rarity:"e"},
+{name:"Elixir of Power",type:"consumable",atk:8,dur:90,cost:60,rarity:"r"},
+{name:"Spiked Collar",type:"armor",def:3,atk:5,cost:55,slot:"neck",rarity:"u"}
 ];
-const ABILITIES = {
-Warrior:{name:"Bash",desc:"Powerful strike",dmg:2.5,cd:8,icon:"🛡️"},
-Paladin:{name:"Holy Strike",desc:"Radiant blow",dmg:2,heal:15,cd:10,icon:"✨"},
-Shadow_Knight:{name:"Life Tap",desc:"Drain life",dmg:1.8,healPercent:30,cd:10,icon:"💀"},
-Cleric:{name:"Smite",desc:"Divine wrath",dmg:2.5,cd:8,icon:"⚡"},
-Shaman:{name:"Spirit Bolt",desc:"Ancestral attack",dmg:2,dot:3,cd:8,icon:"🌀"},
-Druid:{name:"Nature's Wrath",desc:"Vine strike",dmg:2,dot:2,cd:7,icon:"🌿"},
-Monk:{name:"Flying Kick",desc:"Devastating kick",dmg:3,cd:6,icon:"👊"},
-Ranger:{name:"Arrow Volley",desc:"Multi-shot",dmg:2.2,cd:7,icon:"🏹"},
-Rogue:{name:"Backstab",desc:"Critical strike",dmg:3.5,cd:10,icon:"🗡️"},
-Bard:{name:"Battle Song",desc:"Inspire allies",dmg:1.5,atkBoost:4,dur:30,cd:12,icon:"🎵"},
-Wizard:{name:"Fireball",desc:"Explosive blast",dmg:4,cd:12,icon:"🔥"},
-Magician:{name:"Elemental Fury",desc:"Pet strike",dmg:3,cd:9,icon:"🌋"},
-Enchanter:{name:"Mind Spike",desc:"Mental assault",dmg:2.5,stun:1,cd:10,icon:"🧠"},
-Necromancer:{name:"Shadow Bolt",desc:"Dark energy",dmg:3,healPercent:20,cd:9,icon:"🌑"}
+const RARITY_COLORS={c:"#aaa",u:"#4a4",r:"#48f",e:"#a4f"};
+
+const ABILITIES={Warrior:{name:"Bash",desc:"Powerful strike",dmg:2.5,cd:8,icon:"🛡️"},Paladin:{name:"Holy Strike",desc:"Radiant blow",dmg:2,heal:15,cd:10,icon:"✨"},Shadow_Knight:{name:"Life Tap",desc:"Drain life",dmg:1.8,healPercent:30,cd:10,icon:"💀"},Cleric:{name:"Smite",desc:"Divine wrath",dmg:2.5,cd:8,icon:"⚡"},Shaman:{name:"Spirit Bolt",desc:"Ancestral attack",dmg:2,dot:3,cd:8,icon:"🌀"},Druid:{name:"Nature's Wrath",desc:"Vine strike",dmg:2,dot:2,cd:7,icon:"🌿"},Monk:{name:"Flying Kick",desc:"Devastating kick",dmg:3,cd:6,icon:"👊"},Ranger:{name:"Arrow Volley",desc:"Multi-shot",dmg:2.2,cd:7,icon:"🏹"},Rogue:{name:"Backstab",desc:"Critical strike",dmg:3.5,cd:10,icon:"🗡️"},Bard:{name:"Battle Song",desc:"Inspire allies",dmg:1.5,atkBoost:4,dur:30,cd:12,icon:"🎵"},Wizard:{name:"Fireball",desc:"Explosive blast",dmg:4,cd:12,icon:"🔥"},Magician:{name:"Elemental Fury",desc:"Pet strike",dmg:3,cd:9,icon:"🌋"},Enchanter:{name:"Mind Spike",desc:"Mental assault",dmg:2.5,stun:1,cd:10,icon:"🧠"},Necromancer:{name:"Shadow Bolt",desc:"Dark energy",dmg:3,healPercent:20,cd:9,icon:"🌑"}};
+
+const FACTIONS=["Guards of Qeynos","Dark Alliance","Merchants of Norrath","Arcane Council","Nature's Wardens","Shadow Court"];
+const FACTION_COLORS=["#48f","#f44","#f0d870","#a4f","#4a4","#844"];
+
+// Quests: {id,name,desc,type,objective,target,count,zone,xp,gold,item,itemRarity,faction,giver}
+const QUESTS=[
+{id:1,name:"Rat Extermination",desc:"Clear the vermin from Qeynos Hills",type:"kill",target:"Rat",count:5,zone:"1-5",xp:80,gold:15,giver:"Guard Captain"},
+{id:2,name:"Bone Collector",desc:"Bring me 3 bone fragments from skeletons",type:"gather",target:"Bone Shard",count:3,zone:"1-5",xp:60,gold:10,giver:"Necromancer Apprentice"},
+{id:3,name:"Explore Faydark",desc:"Travel to the Greater Faydark",type:"explore",target:"Greater Faydark",zone:"1-5",xp:100,gold:20,giver:"Kelethin Scout"},
+{id:4,name:"Spider Hunt",desc:"Clear 4 spiderlings from the forest",type:"kill",target:"Spiderling",count:4,zone:"1-5",xp:70,gold:12,giver:"Ranger Trainer"},
+{id:5,name:"Gnoll Threat",desc:"Kill 5 gnolls threatening travelers",type:"kill",target:"Gnoll",count:5,zone:"5-10",xp:150,gold:30,giver:"Guard Captain"},
+{id:6,name:"Goblin Sabotage",desc:"Defeat 4 goblin scouts",type:"kill",target:"Goblin Scout",count:4,zone:"5-10",xp:130,gold:25,giver:"Merchant Guard",faction:2},
+{id:7,name:"Bat Wings",desc:"Collect 3 giant bat wings",type:"gather",target:"Bat Wing",count:3,zone:"5-10",xp:110,gold:18,giver:"Alchemist"},
+{id:8,name:"Skeleton Purge",desc:"Destroy 6 skeletons in Befallen",type:"kill",target:"Skeleton",count:6,zone:"5-10",xp:170,gold:35,giver:"Paladin Trainer"},
+{id:9,name:"Orc Invasion",desc:"Kill 4 orc oracles in Crushbone Keep",type:"kill",target:"Orc Oracle",count:4,zone:"10-15",xp:200,gold:50,item:"Crushbone Belt",faction:0,giver:"Elite Guard"},
+{id:10,name:"Froglok Hunt",desc:"Defeat 5 frogloks in Guk Depths",type:"kill",target:"Froglok Squire",count:5,zone:"15-20",xp:280,gold:60,giver:"Deepwater Knight",faction:0},
+{id:11,name:"Fire Essence",desc:"Collect fire imp essence (3 drops)",type:"gather",target:"Fire Essence",count:3,zone:"20-25",xp:350,gold:80,giver:"Arcane Sage",faction:3},
+{id:12,name:"Emperor's Fall",desc:"Slay Emperor Crush in Crushbone Keep",type:"boss",target:"Emperor Crush",zone:"10-15",xp:500,gold:120,item:"Enchanted Sword",itemRarity:"r",faction:0,giver:"High Elf Ambassador"},
+{id:13,name:"Froglok King",desc:"Defeat the Froglok King in Guk Depths",type:"boss",target:"Froglok King",zone:"15-20",xp:650,gold:150,item:"Guk Scale Bracer",itemRarity:"r",faction:5,giver:"Dark Alliance Spy"},
+{id:14,name:"Fire Giant's Bane",desc:"Slay Lord Nagafen in Solusek's Eye",type:"boss",target:"Lord Nagafen",zone:"20-25",xp:900,gold:250,item:"Fire Giant Helm",itemRarity:"r",faction:3,giver:"Arcane Council"},
+{id:15,name:"Explore Guk",desc:"Journey through the Guk Depths",type:"explore",target:"Guk Depths",zone:"15-20",xp:220,gold:40,giver:"Adventurer's Guild"},
+{id:16,name:"Magma Crawlers",desc:"Kill 4 magma worms in Solusek's Eye",type:"kill",target:"Magma Worm",count:4,zone:"20-25",xp:380,gold:70,giver:"Lava Diver",faction:1},
+{id:17,name:"Undead Rising",desc:"Destroy 5 ghouls in Guk Depths",type:"kill",target:"Ghoul",count:5,zone:"15-20",xp:300,gold:55,giver:"Cleric of Life",faction:4},
+{id:18,name:"Lava Drake Scales",desc:"Collect 3 lava drake scales",type:"gather",target:"Drake Scale",count:3,zone:"20-25",xp:400,gold:85,giver:"Armorsmith",faction:2},
+{id:19,name:"Orc Leader Slain",desc:"Kill the Orc Trainer in Crushbone",type:"boss",target:"Orc Trainer",zone:"10-15",xp:420,gold:90,item:"Leather Tunic",itemRarity:"u",giver:"Guard Sergeant"},
+{id:20,name:"Ambassador's Demand",desc:"Eliminate Ambassador D'Vinn",type:"boss",target:"Ambassador D'Vinn",zone:"10-15",xp:450,gold:100,item:"Darksteel Shield",itemRarity:"e",faction:5,giver:"Shadow Court"}
+];
+
+const DAILY_QUESTS=[
+[{id:"d1",name:"Daily: Swift Justice",desc:"Kill 8 rats quickly",type:"kill",target:"Rat",count:8,zone:"1-5",xp:120,gold:25}],
+[{id:"d2",name:"Daily: Gnoll Bounty",desc:"Hunt 6 gnolls today",type:"kill",target:"Gnoll",count:6,zone:"5-10",xp:180,gold:40}],
+[{id:"d3",name:"Daily: Skeleton Key",desc:"Collect 4 bone shards",type:"gather",target:"Bone Shard",count:4,zone:"1-5",xp:100,gold:20}]
+];
+
+const NAMED_MOBS={
+"10-15":[
+{name:"Emperor Crush",level:14,hp:250,atk:25,def:12,abil:{name:"Crushing Blow",type:"burst",dmg:40},drops:[{name:"Runed Blade",rarity:"e"},{name:"Enchanted Circlet",rarity:"r"}],faction:0,factionVal:50},
+{name:"Ambassador D'Vinn",level:13,hp:200,atk:28,def:8,abil:{name:"Shadow Strike",type:"poison",dot:8,dur:3},drops:[{name:"Shadow Dagger",rarity:"e"},{name:"Chain Tunic",rarity:"r"}],faction:5,factionVal:40},
+{name:"Orc Trainer",level:12,hp:180,atk:22,def:10,abil:{name:"Discipline",type:"heal",val:40},drops:[{name:"Leather Tunic",rarity:"u"},{name:"Bone Shield",rarity:"u"}],faction:0,factionVal:30},
+{name:"Lord Darish",level:15,hp:300,atk:30,def:14,abil:{name:"Warcry",type:"burst",dmg:50},drops:[{name:"Plate Helm",rarity:"r"},{name:"Crushbone Belt",rarity:"u"}],faction:1,factionVal:45}
+],
+"15-20":[
+{name:"Froglok King",level:19,hp:400,atk:35,def:18,abil:{name:"Poison Spit",type:"poison",dot:10,dur:3},drops:[{name:"Runed Staff",rarity:"r"},{name:"Guk Scale Bracer",rarity:"r"}],faction:5,factionVal:60},
+{name:"Frenzied Ghoul",level:18,hp:350,atk:38,def:12,abil:{name:"Life Drain",type:"drain",val:30},drops:[{name:"Necrotic Wand",rarity:"e"},{name:"Banded Mail",rarity:"u"}],faction:4,factionVal:50},
+{name:"Tentacle Terror",level:20,hp:500,atk:40,def:15,abil:{name:"Constrict",type:"stun",dur:2},drops:[{name:"Enchanted Boots",rarity:"r"},{name:"Large Shield",rarity:"r"}],faction:4,factionVal:55}
+],
+"20-25":[
+{name:"Lord Nagafen",level:24,hp:600,atk:50,def:22,abil:{name:"Dragon Fire",type:"burst",dmg:80},drops:[{name:"Dragon Cloak",rarity:"e"},{name:"Fire Giant Helm",rarity:"r"}],faction:3,factionVal:80},
+{name:"Solusek Champion",level:23,hp:500,atk:45,def:20,abil:{name:"Flame Strike",type:"burst",dmg:60},drops:[{name:"Holy Avenger",rarity:"e"},{name:"Plate Breastplate",rarity:"r"}],faction:3,factionVal:65},
+{name:"Efreeti Lord",level:25,hp:550,atk:48,def:18,abil:{name:"Heat Wave",type:"poison",dot:12,dur:3},drops:[{name:"Nature's Bow",rarity:"e"},{name:"Enchanted Sword",rarity:"r"}],faction:1,factionVal:70}
+]
 };
+
+const NAMED_POOL=["25-30","35-40","40-45"].reduce((a,k)=>{const zk=(Object.keys(NAMED_MOBS)[0]);const base=NAMED_MOBS[zk]?NAMED_MOBS[zk][0]:{name:"Warlord",level:30,hp:1000,atk:55,def:25,abil:{name:"Crush",type:"burst",dmg:100},drops:[{name:"Runed Breastplate",rarity:"e"}],faction:1,factionVal:100};a[k]=[{...base,name:GAMEDB.zones[k].enemies[0]+" Warlord",level:parseInt(k)}];return a},{});
+Object.assign(NAMED_MOBS,NAMED_POOL);
+
 const XP_TABLE=(()=>{let t={},a=0;for(let l=1;l<=60;l++){a+=Math.floor(l*25+l*l*2);t[l]=a}return t})();
 
+// ══════════════════ GAME STATE ══════════════════
 let STATE={
 screen:'create',selectedRace:null,selectedClass:null,
 player:{name:'',race:'',cls:'',level:1,xp:0,hp:100,maxHp:100,atk:5,def:2,str:10,sta:10,agi:10,dex:10,wis:10,int:10,zone:'1-5',kills:0,gold:0,hp_per_lvl:8,inventory:[],equipped:{}},
-enemy:{name:'Rat',level:1,hp:10,maxHp:10,atk:4,def:1},
-log:[],autoAttack:false,autoInterval:null,abilityCooldown:0,abilityTimer:null,shopItems:[0,1,2,3,4,5,6,7,8,9]
+enemy:{name:'Rat',level:1,hp:10,maxHp:10,atk:4,def:1,isNamed:false,namedData:null,namedAbilityUsed:false},
+log:[],autoAttack:false,autoInterval:null,abilityCooldown:0,abilityTimer:null,shopItems:[0,1,2,3,4,5,6,7,8,9],
+factions:{},questLog:[],completedQuests:[],dailyLog:[],dailyIdx:0,dailyDate:'',
+questProgress:{},lastZone:null,namedAbilityTimer:null
 };
 
+// ══════════════════ SCREEN MANAGEMENT ══════════════════
 function switchScreen(id){
 document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
 document.getElementById(id+'Screen').classList.add('active');
@@ -157,16 +265,18 @@ if(id==='game')updateEnemyDisplay();
 if(id==='zone')renderZones();
 if(id==='inv')renderInv();
 if(id==='shop')renderShop();
+if(id==='quest'){checkDaily();renderQuestLog('active')}
+if(id==='faction')renderFactions();
 }
 
-// === CREATE ===
+// ══════════════════ CHARACTER CREATION ══════════════════
 function renderRaces(){
 document.getElementById('raceList').innerHTML=Object.entries(GAMEDB.races).map(([k,v])=>`<button class="btn" onclick="selectRace('${k}')">${v.name}</button>`).join('');
 }
 function selectRace(rk){
 STATE.selectedRace=rk;STATE.selectedClass=null;
 document.querySelectorAll('#raceList .btn').forEach(b=>b.style.borderColor=b.textContent===GAMEDB.races[rk].name?'#f0d870':'');
-const rm=GAMEDB.class_race_map||{};
+const rm=GAMEDB.class_race_map||{"Bard":["Human","Half-Elf","Wood_Elf"],"Cleric":["Human","Dark_Elf","Erudite","Dwarf","Gnome","Halfling","High_Elf"],"Druid":["Human","Half-Elf","Halfling","Wood_Elf"],"Enchanter":["Human","Dark_Elf","Erudite","Gnome","High_Elf"],"Magician":["Human","Dark_Elf","Erudite","Gnome","High_Elf"],"Monk":["Human","Iksar"],"Necromancer":["Human","Dark_Elf","Erudite","Gnome","Iksar"],"Paladin":["Human","Dwarf","Erudite","Half-Elf","High_Elf"],"Ranger":["Human","Half-Elf","Halfling","Wood_Elf"],"Rogue":["Human","Barbarian","Dark_Elf","Dwarf","Gnome","Half-Elf","Halfling","Wood_Elf"],"Shadow_Knight":["Human","Dark_Elf","Erudite","Iksar","Ogre","Troll"],"Shaman":["Barbarian","Iksar","Ogre","Troll"],"Warrior":["Barbarian","Dark_Elf","Dwarf","Gnome","Half-Elf","Halfling","Human","Iksar","Ogre","Troll","Wood_Elf"],"Wizard":["Human","Dark_Elf","Erudite","Gnome","High_Elf"]};
 const av=Object.keys(GAMEDB.classes).filter(c=>{const rs=rm[c];return rs&&rs.includes(rk)});
 document.getElementById('classList').innerHTML=av.map(k=>`<button class="btn" onclick="selectClass('${k}')">${GAMEDB.classes[k].name}</button>`).join('')||'<p style="color:#8a8aaa">No classes</p>';
 document.getElementById('classList').style.display='block';
@@ -180,15 +290,11 @@ document.getElementById('startBtn').style.display='block';
 }
 function startGame(){
 if(!STATE.selectedRace||!STATE.selectedClass)return;
-const s=GAMEDB.class_stats[STATE.selectedClass]||{str:10,sta:10,agi:10,dex:10,wis:10,int:10,hp_per_lvl:8};
+const s=GAMEDB.class_stats&&GAMEDB.class_stats[STATE.selectedClass]||{str:10,sta:10,agi:10,dex:10,wis:10,int:10,hp_per_lvl:8};
 const ab=ABILITIES[STATE.selectedClass]||ABILITIES.Warrior;
-STATE.player={
-name:GAMEDB.races[STATE.selectedRace].name+' '+GAMEDB.classes[STATE.selectedClass].name,
-race:STATE.selectedRace,cls:STATE.selectedClass,level:1,xp:0,
-hp:100+s.sta*5,maxHp:100+s.sta*5,atk:5+Math.floor(s.str/2),def:2+Math.floor(s.agi/3),
-str:s.str,sta:s.sta,dex:s.dex,agi:s.agi,wis:s.wis,int:s.int,hp_per_lvl:s.hp_per_lvl||8,
-zone:'1-5',kills:0,gold:0,inventory:[],equipped:{},ability:ab
-};
+STATE.player={name:GAMEDB.races[STATE.selectedRace].name+' '+GAMEDB.classes[STATE.selectedClass].name,race:STATE.selectedRace,cls:STATE.selectedClass,level:1,xp:0,hp:100+s.sta*5,maxHp:100+s.sta*5,atk:5+Math.floor(s.str/2),def:2+Math.floor(s.agi/3),str:s.str,sta:s.sta,dex:s.dex,agi:s.agi,wis:s.wis,int:s.int,hp_per_lvl:s.hp_per_lvl||8,zone:'1-5',kills:0,gold:0,inventory:[],equipped:{},ability:ab};
+FACTIONS.forEach((f,i)=>{STATE.factions[f]=0});
+STATE.questLog=[];STATE.completedQuests=[];STATE.questProgress={};STATE.dailyLog=[];STATE.dailyDate='';STATE.lastZone='1-5';
 document.getElementById('charName').textContent=STATE.player.name;
 document.getElementById('abilityName').textContent=ab.icon+' '+ab.name;
 updatePlayerDisplay();
@@ -196,17 +302,33 @@ spawnEnemy();
 switchScreen('game');
 }
 
-// === COMBAT ===
+// ══════════════════ COMBAT ══════════════════
 function spawnEnemy(){
 const z=GAMEDB.zones[STATE.player.zone];
+if(!z){STATE.player.zone='1-5';return spawnEnemy()}
+const namedList=z.named||NAMED_MOBS[STATE.player.zone]||[];
+const isNamed=namedList.length>0&&Math.random()<0.08;
+if(isNamed){
+const nd=namedList[Math.floor(Math.random()*namedList.length)];
+const lvl=nd.level,hp=nd.hp,atk=nd.atk,def=nd.def;
+STATE.enemy={name:nd.name,level:lvl,hp,maxHp:hp,atk,def,isNamed:true,namedData:nd,namedAbilityUsed:false};
+}else{
 const name=z.enemies[Math.floor(Math.random()*z.enemies.length)];
 const lvl=STATE.player.level+Math.floor(Math.random()*3)-1;
 const level=Math.max(1,Math.min(60,lvl));
 const hp=10+level*8+Math.floor(Math.random()*20);
 const atk=3+Math.floor(level*1.5);
-STATE.enemy={name,level,hp,maxHp:hp,atk,def:Math.floor(level/3)};
-document.getElementById('playerZone').textContent=z.name+' — '+z.zones[Math.floor(Math.random()*z.zones.length)];
+STATE.enemy={name,level,hp,maxHp:hp,atk,def:Math.floor(level/3),isNamed:false,namedData:null};
+}
+const zoneList=z.zones;
+document.getElementById('playerZone').textContent=z.name+' — '+zoneList[Math.floor(Math.random()*zoneList.length)];
+document.getElementById('rareBadge').style.display=STATE.enemy.isNamed?'inline':'none';
 updateEnemyDisplay();
+// Explore quest check
+if(STATE.lastZone!==STATE.player.zone){
+checkExploreQuests(STATE.player.zone);
+STATE.lastZone=STATE.player.zone;
+}
 }
 
 function attack(){
@@ -222,9 +344,40 @@ e.hp-=fd;
 floatText(crit?'💥'+fd:''+fd,crit?'#ff0':'#ff6a4a');
 updateEnemyDisplay();
 if(e.hp<=0){killEnemy();return}
+
+// Named mob ability trigger at 50% hp
+if(e.isNamed&&!e.namedAbilityUsed&&e.hp<e.maxHp*0.5){
+e.namedAbilityUsed=true;
+const abil=e.namedData.abil;
+if(abil.type==='burst'){
+p.hp-=abil.dmg;
+floatText('💀 '+abil.name+' -'+abil.dmg,'#a4f');
+addLog(`⚠️ ${e.name} uses ${abil.name}! ${abil.dmg} dmg`,'named');
+}else if(abil.type==='heal'){
+e.hp=Math.min(e.maxHp,e.hp+abil.val);
+floatText('💚 Heal +'+abil.val,'#4a4');
+addLog(`💚 ${e.name} heals for ${abil.val}`,'heal');
+}else if(abil.type==='poison'){
+STATE.namedAbilityTimer=setInterval(()=>{if(STATE.screen!=='game'||STATE.enemy.hp<=0){clearInterval(STATE.namedAbilityTimer);STATE.namedAbilityTimer=null;return}const dd=Math.floor(abil.dot);p.hp-=dd;floatText('☠️'+dd,'#a4f');updatePlayerDisplay();if(p.hp<=0)death()},1000);
+setTimeout(()=>{if(STATE.namedAbilityTimer){clearInterval(STATE.namedAbilityTimer);STATE.namedAbilityTimer=null}},abil.dur*1000);
+addLog(`☠️ ${e.name} poisons you!`,'named');
+}else if(abil.type==='stun'){
+addLog(`⚡ ${e.name} stuns you for ${abil.dur}s!`,'named');
+STATE.abilityCooldown=Math.max(STATE.abilityCooldown,abil.dur);
+updateCooldown();
+}else if(abil.type==='drain'){
+p.hp-=abil.val;
+e.hp=Math.min(e.maxHp,e.hp+Math.floor(abil.val/2));
+floatText('🩸 Drain -'+abil.val,'#a4f');
+addLog(`🩸 ${e.name} drains ${abil.val} life!`,'named');
+}
+updatePlayerDisplay();
+updateEnemyDisplay();
+}
+
 setTimeout(()=>{
 if(STATE.screen!=='game')return;
-const totalDef=p.def+(p.equipped.chest?p.equipped.chest.def||0:0)+(p.equipped.head?p.equipped.head.def||0:0)+(p.equipped.arms?p.equipped.arms.def||0:0)+(p.equipped.offhand?p.equipped.offhand.def||0:0);
+const totalDef=p.def+(p.equipped.chest?p.equipped.chest.def||0:0)+(p.equipped.head?p.equipped.head.def||0:0)+(p.equipped.arms?p.equipped.arms.def||0:0)+(p.equipped.offhand?p.equipped.offhand.def||0:0)+(p.equipped.legs?p.equipped.legs.def||0:0)+(p.equipped.waist?p.equipped.waist.def||0:0)+(p.equipped.feet?p.equipped.feet.def||0:0)+(p.equipped.back?p.equipped.back.def||0:0)+(p.equipped.neck?p.equipped.neck.def||0:0);
 const edmg=Math.max(1,Math.floor(e.atk*(0.8+Math.random()*0.4)-totalDef));
 p.hp-=edmg;
 floatText(''+edmg,'#ff4a4a');
@@ -274,16 +427,14 @@ STATE.autoAttack=!STATE.autoAttack;
 const btn=document.getElementById('autoBtn');
 const zone=document.getElementById('tapZone');
 if(STATE.autoAttack){
-btn.textContent='🔄 AUTO: ON';
-btn.classList.add('green');
+btn.textContent='🔄 AUTO: ON';btn.classList.add('green');
 zone.classList.add('auto');
-zone.querySelector('div').innerHTML='<div class="sword">⚔️</div><div style="color:#6aff6a;font-size:.8em;margin-top:6px">AUTO ATTACKING</div>';
+zone.querySelector('div').innerHTML='<div class="sword">⚔️</div><div style="color:#6aff6a;font-size:.75em;margin-top:4px">AUTO ATTACKING</div>';
 STATE.autoInterval=setInterval(()=>{if(STATE.screen==='game')attack()},800);
 }else{
-btn.textContent='🔄 AUTO: OFF';
-btn.classList.remove('green');
+btn.textContent='🔄 AUTO: OFF';btn.classList.remove('green');
 zone.classList.remove('auto');
-zone.querySelector('div').innerHTML='<div class="sword">⚔️</div><div style="color:#8a8aaa;font-size:.8em;margin-top:6px">TAP TO ATTACK</div>';
+zone.querySelector('div').innerHTML='<div class="sword">⚔️</div><div style="color:#8a8aaa;font-size:.75em;margin-top:4px">TAP TO ATTACK</div>';
 clearInterval(STATE.autoInterval);
 }
 }
@@ -295,20 +446,69 @@ p.xp+=xpGain;p.kills++;
 const goldDrop=Math.floor(Math.random()*6)+e.level;
 p.gold+=goldDrop;
 addLog(`💀 Slain ${e.name}! +${xpGain}XP +${goldDrop}💰`,'xp');
-// Loot drop chance
-if(Math.random()<0.25){
-const i=Math.floor(Math.random()*ITEMS.length);
-p.inventory.push({...ITEMS[i]});
-addLog(`🎁 Loot: ${ITEMS[i].name}!`,'loot');
+
+// Named mob drops
+if(e.isNamed&&e.namedData){
+const drops=e.namedData.drops;
+if(drops.length>0){
+const drop=drops[Math.floor(Math.random()*drops.length)];
+const item=ITEMS.find(i=>i.name===drop.name);
+if(item){
+p.inventory.push({...item,rarity:drop.rarity||item.rarity});
+addLog(`👑 Loot: ${drop.name}!`,'named');
+toast(`👑 ${drop.name} dropped!`);
+}else{
+const newItem={name:drop.name,type:"weapon",atk:10,slot:"weapon",rarity:drop.rarity||"r",cost:100};
+p.inventory.push(newItem);
+addLog(`👑 ${drop.name}!`,'named');
 }
+// Second drop chance
+if(Math.random()<0.5&&drops.length>1){
+const d2=drops[1]||drops[0];
+const i2=ITEMS.find(i=>i.name===d2.name)||{name:d2.name,type:"armor",def:5,slot:"chest",rarity:d2.rarity||"r",cost:80};
+p.inventory.push({...i2,rarity:d2.rarity||i2.rarity});
+addLog(`👑 Also: ${d2.name}!`,'named');
+}
+}
+// Faction gain
+if(e.namedData.faction!==undefined){
+const fn=FACTIONS[e.namedData.faction];
+if(fn){STATE.factions[fn]=(STATE.factions[fn]||0)+e.namedData.factionVal;addLog(`🏛️ +${e.namedData.factionVal} ${fn} rep`,'faction')}
+}
+// Boss quest check
+checkBossQuests(e.name);
+}
+
+// Normal loot
+if(Math.random()<0.3){
+// Weighted: 60% common, 25% uncommon, 12% rare, 3% epic
+const roll=Math.random();
+let rarity='c';
+if(roll>0.97)rarity='e';
+else if(roll>0.85)rarity='r';
+else if(roll>0.6)rarity='u';
+const candidates=ITEMS.filter(i=>i.rarity===rarity);
+const item=candidates.length>0?candidates[Math.floor(Math.random()*candidates.length)]:ITEMS[Math.floor(Math.random()*ITEMS.length)];
+p.inventory.push({...item});
+addLog(`🎁 Loot: ${item.name}!`,'loot');
+// Gather quest check
+checkGatherQuests(item.name);
+}
+
+// Kill quest check
+checkKillQuests(e.name);
+if(e.isNamed)checkKillQuests(e.name);
+
 const needed=XP_TABLE[p.level]||1000;
 if(p.xp>=needed&&p.level<60){
 p.level++;p.xp-=needed;
 p.maxHp+=p.hp_per_lvl||8;p.hp=p.maxHp;
 p.atk+=Math.floor(Math.random()*3)+2;p.def+=Math.floor(Math.random()*2)+1;
 addLog(`⭐ LEVEL UP! Level ${p.level}!`,'lvl');
+toast(`⭐ Level ${p.level}!`);
 }
 updatePlayerDisplay();
+if(STATE.namedAbilityTimer){clearInterval(STATE.namedAbilityTimer);STATE.namedAbilityTimer=null}
 setTimeout(spawnEnemy,800);
 }
 
@@ -316,6 +516,7 @@ function death(){
 STATE.player.hp=Math.floor(STATE.player.maxHp/2);
 STATE.player.xp=Math.max(0,STATE.player.xp-Math.floor(XP_TABLE[STATE.player.level]*0.05));
 if(STATE.autoAttack)toggleAuto();
+if(STATE.namedAbilityTimer){clearInterval(STATE.namedAbilityTimer);STATE.namedAbilityTimer=null}
 switchScreen('death');
 }
 function respawn(){
@@ -323,7 +524,7 @@ STATE.player.hp=STATE.player.maxHp;
 updatePlayerDisplay();spawnEnemy();switchScreen('game');
 }
 
-// === DISPLAY ===
+// ══════════════════ DISPLAY ══════════════════
 function updatePlayerDisplay(){
 const p=STATE.player;
 document.getElementById('playerHp').textContent=Math.max(0,p.hp);
@@ -359,8 +560,13 @@ el.style.color=color;el.style.left=(30+Math.random()*30)+'%';el.style.top='45%';
 el.textContent=text;document.getElementById('gameScreen').appendChild(el);
 setTimeout(()=>el.remove(),800);
 }
+function toast(msg){
+const el=document.createElement('div');el.className='toast';el.textContent=msg;
+document.getElementById('gameScreen').appendChild(el);
+setTimeout(()=>el.remove(),2800);
+}
 
-// === INVENTORY ===
+// ══════════════════ INVENTORY ══════════════════
 function renderInv(){
 const p=STATE.player;
 document.getElementById('invGold').textContent=p.gold;
@@ -368,16 +574,21 @@ document.getElementById('invKills').textContent=p.kills;
 const inv=p.inventory;
 if(!inv.length){document.getElementById('invContent').innerHTML='<p style="color:#8a8aaa">Empty. Kill enemies for loot!</p>';return}
 let html='<h2>Equipment</h2>';
-const slots={weapon:'⚔️ Weapon',head:'🎩 Head',chest:'👕 Chest',arms:'💪 Arms',offhand:'🛡️ Offhand'};
-for(const [slot,label] of Object.entries(slots)){
-if(p.equipped[slot])html+=`<div class="inv-item"><span>${label}: ${p.equipped[slot].name}</span><span style="color:#f0d870">ATK+${p.equipped[slot].atk||0} DEF+${p.equipped[slot].def||0}</span><button class="btn red" style="display:inline;width:auto;padding:2px 8px;font-size:.7em" onclick="unequip('${slot}')">X</button></div>`;
-else html+=`<div class="inv-item"><span>${label}:</span><span style="color:#6a6a8a">Empty</span></div>`;
+const allSlots={weapon:'⚔️ Weapon',head:'🎩 Head',chest:'👕 Chest',arms:'💪 Arms',legs:'👖 Legs',feet:'👢 Feet',offhand:'🛡️ Offhand',waist:'🎗️ Waist',back:'🧥 Back',neck:'📿 Neck'};
+for(const [slot,label] of Object.entries(allSlots)){
+if(p.equipped[slot]){
+const eq=p.equipped[slot];
+const rc=RARITY_COLORS[eq.rarity]||'#aaa';
+html+=`<div class="inv-item"><span>${label}: <span style="color:${rc}">${eq.name}</span></span><span style="color:#f0d870">ATK+${eq.atk||0} DEF+${eq.def||0}</span><button class="btn red" style="display:inline;width:auto;padding:2px 8px;font-size:.7em" onclick="unequip('${slot}')">X</button></div>`;
+}else html+=`<div class="inv-item"><span>${label}:</span><span style="color:#6a6a8a">Empty</span></div>`;
 }
 html+='<h2>Backpack</h2>';
 inv.forEach((item,i)=>{
 const eq=item.slot&&p.equipped[item.slot]===item;
-html+=`<div class="inv-item"><span>${item.name}${eq?' ✅':''}</span><span>${item.atk?'ATK+'+item.atk+' ':''}${item.def?'DEF+'+item.def+' ':''}</span>`;
-if(!eq&&item.slot)html+=`<button class="btn green" style="display:inline;width:auto;padding:2px 8px;font-size:.7em" onclick="equip(${i})">Equip</button>`;
+const rc=RARITY_COLORS[item.rarity]||'#aaa';
+const clsOk=!item.cls||item.cls===p.cls;
+html+=`<div class="inv-item"><span style="color:${rc}">${item.name}${eq?' ✅':''}${!clsOk?' 🔒':''}</span><span>${item.atk?'ATK+'+item.atk+' ':''}${item.def?'DEF+'+item.def+' ':''}${item.agi?'AGI+'+item.agi+' ':''}</span>`;
+if(!eq&&item.slot&&clsOk)html+=`<button class="btn green" style="display:inline;width:auto;padding:2px 8px;font-size:.7em" onclick="equip(${i})">Equip</button>`;
 html+='</div>';
 });
 document.getElementById('invContent').innerHTML=html;
@@ -386,6 +597,7 @@ function equip(i){
 const p=STATE.player;
 const item=p.inventory[i];
 if(!item||!item.slot)return;
+if(item.cls&&item.cls!==p.cls)return;
 if(p.equipped[item.slot])p.inventory.push(p.equipped[item.slot]);
 p.equipped[item.slot]=item;
 p.inventory.splice(i,1);
@@ -399,49 +611,256 @@ p.equipped[slot]=null;
 renderInv();updatePlayerDisplay();
 }
 
-// === SHOP ===
+// ══════════════════ SHOP ══════════════════
+function getBestFactionMod(){
+let best=0;
+for(const [f,v] of Object.entries(STATE.factions)){
+if(f==="Merchants of Norrath"&&v>best)best=v;
+}
+for(const [f,v] of Object.entries(STATE.factions)){
+if(f!=="Merchants of Norrath"&&v>best)best=v;
+}
+if(best>=50)return-20;
+if(best>=30)return-10;
+if(best<=-50)return 50;
+if(best<=-30)return 25;
+return 0;
+}
 function renderShop(){
 const p=STATE.player;
+const mod=getBestFactionMod();
+const modText=mod<0?`${mod}% discount`:mod>0?`+${mod}% markup`:'neutral';
+document.getElementById('shopFaction').textContent=`Merchant attitude: ${modText}`;
 let html=`<div class="stat-row"><span>💰 Your Gold: ${p.gold}</span></div>`;
 STATE.shopItems.forEach(i=>{
 const item=ITEMS[i];
 if(!item)return;
+const clsOk=!item.cls||item.cls===p.cls;
+const realCost=Math.floor(item.cost*(1+mod/100));
+const rc=RARITY_COLORS[item.rarity]||'#aaa';
 const desc=item.atk?'ATK+'+item.atk:item.def?'DEF+'+item.def:item.heal?'Heal '+item.heal:'';
-html+=`<div class="shop-item"><strong>${item.name}</strong> <span style="color:#f0d870">${desc}</span> ${item.cost}💰
-<button class="btn gold" style="display:inline;width:auto;padding:6px 12px;font-size:.8em;float:right" onclick="buyItem(${i})" ${p.gold<item.cost?'disabled':''}>Buy</button></div>`;
+const rarityNames={c:'Common',u:'Uncommon',r:'Rare',e:'Epic'};
+html+=`<div class="shop-item"><strong style="color:${rc}">${item.name}</strong> <span style="font-size:.7em;color:${rc}">${rarityNames[item.rarity]||''}</span> <span style="color:#f0d870">${desc}</span> ${realCost}💰`;
+if(!clsOk)html+=' <span style="color:#ff6a6a">🔒 '+item.cls+' only</span>';
+else html+=`<button class="btn gold" style="display:inline;width:auto;padding:6px 12px;font-size:.75em;float:right" onclick="buyItem(${i})" ${p.gold<realCost?'disabled':''}>Buy</button>`;
+html+='</div>';
 });
-html+='<button class="btn gold" onclick="refreshShop()" style="text-align:center">🔄 Refresh Shop</button>';
+html+='<button class="btn gold" onclick="refreshShop()" style="text-align:center">🔄 Refresh Shop (100💰)</button>';
 document.getElementById('shopContent').innerHTML=html;
 }
 function buyItem(i){
 const p=STATE.player;
 const item=ITEMS[i];
-if(p.gold<item.cost)return;
-p.gold-=item.cost;
+const mod=getBestFactionMod();
+const realCost=Math.floor(item.cost*(1+mod/100));
+if(p.gold<realCost)return;
+p.gold-=realCost;
 if(item.slot){p.inventory.push({...item})}
 else if(item.heal){p.hp=Math.min(p.maxHp,p.hp+item.heal);addLog(`Used ${item.name}! +${item.heal} HP`,'heal');updatePlayerDisplay()}
 else if(item.atk&&item.dur){p.atk+=item.atk;addLog(`${item.name}: +${item.atk} ATK for ${item.dur}s`,'lvl');setTimeout(()=>{p.atk-=item.atk;addLog(item.name+' faded','dmg')},item.dur*1000)}
 renderShop();renderInv();
 }
 function refreshShop(){
-STATE.shopItems=Array.from({length:6},()=>Math.floor(Math.random()*ITEMS.length));
+if(STATE.player.gold<100)return;
+STATE.player.gold-=100;
+STATE.shopItems=Array.from({length:8},()=>Math.floor(Math.random()*ITEMS.length));
 renderShop();
 }
 
-// === ZONES ===
+// ══════════════════ ZONES ══════════════════
 function renderZones(){
 const p=STATE.player;
 let html='';
 for(const [range,data] of Object.entries(GAMEDB.zones)){
 const [min]=range.split('-').map(Number);
 const locked=p.level<min;
-html+=`<button class="btn" onclick="changeZone('${range}')" ${locked?'disabled':''}>${locked?'🔒 ':''}Lv ${range} — ${data.name} ${range===p.zone?'◀':''}${locked?'':`<small style="display:block;font-size:.7em;color:#8a8aaa">${data.zones.slice(0,3).join(', ')}...</small>`}</button>`;
+const npcQuests=QUESTS.filter(q=>q.zone===range&&!STATE.completedQuests.includes(q.id)&&!STATE.questLog.find(ql=>ql.id===q.id));
+html+=`<button class="btn" onclick="changeZone('${range}')" ${locked?'disabled':''}>${locked?'🔒 ':''}Lv ${range} — ${data.name} ${range===p.zone?'◀':''}${npcQuests.length?`<span style="color:#f0d870;font-size:.7em">📜${npcQuests.length}</span>`:''}${locked?'':'<small style="display:block;font-size:.7em;color:#8a8aaa">'+data.zones.slice(0,2).join(', ')+'</small>'}</button>`;
 }
 document.getElementById('zoneList').innerHTML=html;
 }
 function changeZone(range){STATE.player.zone=range;spawnEnemy();switchScreen('game');}
 
-// === INIT ===
+// ══════════════════ QUEST SYSTEM ══════════════════
+function checkDaily(){
+const today=new Date().toDateString();
+if(STATE.dailyDate!==today){
+STATE.dailyDate=today;
+STATE.dailyIdx=Math.floor(Math.random()*DAILY_QUESTS.length);
+STATE.dailyLog=DAILY_QUESTS[STATE.dailyIdx].map(q=>({...q,progress:0}));
+toast('📜 Daily quests refreshed!');
+}
+}
+function acceptQuest(qid){
+if(STATE.questLog.find(q=>q.id===qid))return;
+const q=QUESTS.find(q=>q.id===qid);
+if(!q)return;
+const pq={...q,progress:0,objDesc:q.type==='kill'?`Kill ${q.target}: 0/${q.count}`:q.type==='gather'?`Collect ${q.target}: 0/${q.count}`:q.type==='explore'?`Reach ${q.target}`:`Slay ${q.target}`};
+STATE.questLog.push(pq);
+STATE.questProgress[qid]={kills:{},gathers:{},boss:false,explore:false};
+toast(`📜 Quest accepted: ${q.name}`);
+renderQuestLog('active');
+}
+function checkKillQuests(target){
+const p=STATE.player;
+STATE.questLog.forEach((q,i)=>{
+if(q.type==='kill'&&q.target===target&&q.zone===p.zone){
+const pq=STATE.questProgress[q.id];
+if(!pq)return;
+pq.kills[target]=(pq.kills[target]||0)+1;
+const c=pq.kills[target];
+q.progress=c;
+q.objDesc=`Kill ${q.target}: ${c}/${q.count}`;
+if(c>=q.count)completeQuest(i);
+else toast(`⚔️ ${target}: ${c}/${q.count}`);
+}
+});
+// Also daily
+STATE.dailyLog.forEach((q,i)=>{
+if(q.type==='kill'&&q.target===target){
+q.progress=(q.progress||0)+1;
+if(q.progress>=q.count)completeDaily(i);
+}
+});
+}
+function checkGatherQuests(itemName){
+const p=STATE.player;
+STATE.questLog.forEach((q,i)=>{
+if(q.type==='gather'&&q.target===itemName&&q.zone===p.zone){
+const pq=STATE.questProgress[q.id];
+if(!pq)return;
+pq.gathers[itemName]=(pq.gathers[itemName]||0)+1;
+const c=pq.gathers[itemName];
+q.progress=c;
+q.objDesc=`Collect ${q.target}: ${c}/${q.count}`;
+if(c>=q.count)completeQuest(i);
+else toast(`📦 ${itemName}: ${c}/${q.count}`);
+}
+});
+STATE.dailyLog.forEach((q,i)=>{
+if(q.type==='gather'&&q.target===itemName){
+q.progress=(q.progress||0)+1;
+if(q.progress>=q.count)completeDaily(i);
+}
+});
+}
+function checkExploreQuests(zoneId){
+STATE.questLog.forEach((q,i)=>{
+if(q.type==='explore'){
+const zData=GAMEDB.zones[zoneId];
+if(zData&&(zData.zones.join(' ').includes(q.target)||zData.name.includes(q.target))){
+const pq=STATE.questProgress[q.id];
+if(pq&&!pq.explore){
+pq.explore=true;
+q.progress=1;
+q.objDesc=`Reach ${q.target}: ✅`;
+completeQuest(i);
+}
+}
+}
+});
+}
+function checkBossQuests(name){
+STATE.questLog.forEach((q,i)=>{
+if(q.type==='boss'&&q.target===name){
+const pq=STATE.questProgress[q.id];
+if(pq&&!pq.boss){
+pq.boss=true;
+q.progress=1;
+q.objDesc=`Slay ${q.target}: ✅`;
+completeQuest(i);
+}
+}
+});
+}
+function completeQuest(idx){
+const q=STATE.questLog[idx];
+if(!q||q.completed)return;
+q.completed=true;
+const p=STATE.player;
+p.xp+=q.xp;p.gold+=q.gold;
+if(q.item){
+const itemData=ITEMS.find(i=>i.name===q.item);
+if(itemData)p.inventory.push({...itemData,rarity:q.itemRarity||itemData.rarity});
+else p.inventory.push({name:q.item,type:"weapon",atk:8,slot:"weapon",rarity:q.itemRarity||"r",cost:80});
+}
+if(q.faction!==undefined){
+const fn=FACTIONS[q.faction];
+if(fn){STATE.factions[fn]=(STATE.factions[fn]||0)+25;addLog(`🏛️ +25 ${fn} rep`,'faction')}
+}
+addLog(`✅ Quest complete: ${q.name}! +${q.xp}XP +${q.gold}💰`,'quest');
+toast(`✅ ${q.name} complete!`);
+// Remove from active and add to completed
+STATE.completedQuests.push(q.id);
+STATE.questLog.splice(idx,1);
+delete STATE.questProgress[q.id];
+updatePlayerDisplay();
+renderQuestLog('active');
+}
+function completeDaily(idx){
+const q=STATE.dailyLog[idx];
+if(!q||q.done)return;
+q.done=true;
+const p=STATE.player;
+p.xp+=q.xp;p.gold+=q.gold;
+addLog(`📅 Daily: ${q.name} complete! +${q.xp}XP +${q.gold}💰`,'quest');
+toast(`📅 Daily done: ${q.name}!`);
+updatePlayerDisplay();
+}
+function renderQuestLog(tab){
+checkDaily();
+let html='';
+// Daily section at top
+let dhtml='<h2>📅 Daily Quests</h2>';
+STATE.dailyLog.forEach(q=>{
+dhtml+=`<div class="quest-card">${q.done?'✅ ':''}<strong>${q.name}</strong><div style="font-size:.75em;color:#8a8aaa">${q.desc}</div><div class="objectives">${q.type==='kill'?`Kill ${q.target}: ${q.progress||0}/${q.count}`:q.type==='gather'?`Collect ${q.target}: ${q.progress||0}/${q.count}`:''}</div></div>`;
+});
+document.getElementById('dailySection').innerHTML=dhtml;
+
+if(tab==='active'){
+html='<h2>Active Quests</h2>';
+if(!STATE.questLog.length)html+='<p style="color:#8a8aaa">No active quests. Visit a zone to find NPC quests!</p>';
+else STATE.questLog.forEach(q=>{html+=`<div class="quest-card"><strong>${q.name}</strong> <span style="font-size:.7em;color:#8a8aaa">Lv${q.zone}</span><div style="font-size:.75em;color:#8a8aaa">${q.desc}</div><div class="objectives">${q.objDesc}</div><div class="reward">💰${q.gold}g ⭐${q.xp}XP ${q.item?'🎁'+q.item:''}</div></div>`});
+}else if(tab==='completed'){
+html='<h2>Completed Quests</h2>';
+if(!STATE.completedQuests.length)html+='<p style="color:#8a8aaa">None completed yet.</p>';
+else STATE.completedQuests.forEach(id=>{const q=QUESTS.find(qq=>qq.id===id);if(q)html+=`<div class="quest-card">✅ <strong>${q.name}</strong><div class="reward">💰${q.gold}g ⭐${q.xp}XP</div></div>`});
+}else if(tab==='zone'){
+html=`<h2>NPC Quests — Current Zone</h2><p style="font-size:.75em;color:#8a8aaa">Zone: ${GAMEDB.zones[STATE.player.zone].name}</p>`;
+const zq=QUESTS.filter(q=>q.zone===STATE.player.zone&&!STATE.completedQuests.includes(q.id)&&!STATE.questLog.find(ql=>ql.id===q.id));
+if(!zq.length)html+='<p style="color:#8a8aaa">No new quests available here.</p>';
+else zq.forEach(q=>{
+html+=`<div class="npc-card"><strong>${q.giver}</strong> <span style="font-size:.7em;color:#8a8aaa">NPC</span><div style="font-size:.85em;margin:3px 0"><strong>${q.name}</strong></div><div style="font-size:.75em;color:#8a8aaa;margin:2px 0">${q.desc}</div><div class="objectives">${q.type==='kill'?`Kill ${q.target} x${q.count}`:q.type==='gather'?`Collect ${q.target} x${q.count}`:q.type==='explore'?`Travel to ${q.target}`:`Slay ${q.target}`}</div><div class="reward">💰${q.gold}g ⭐${q.xp}XP ${q.item?'🎁'+q.item:''}</div><button class="btn green" style="text-align:center;font-size:.8em;margin-top:4px" onclick="acceptQuest(${q.id})">Accept Quest</button></div>`;
+});
+}
+document.getElementById('questContent').innerHTML=html;
+}
+
+// ══════════════════ FACTION SYSTEM ══════════════════
+function getFactionLevel(val){
+if(val>=80)return{name:"Exalted",color:"#f0d870"};
+if(val>=50)return{name:"Friendly",color:"#4a4"};
+if(val>=20)return{name:"Warm",color:"#6a6"};
+if(val>=-19)return{name:"Neutral",color:"#8a8aaa"};
+if(val>=-49)return{name:"Dubious",color:"#ff8a4a"};
+if(val>=-79)return{name:"Hostile",color:"#ff4a4a"};
+return{name:"Scowling",color:"#f22"};
+}
+function renderFactions(){
+let html='';
+const factionEnemies={0:[1,5],1:[0,4],2:[],3:[1,5],4:[1],5:[0,3]};
+for(let i=0;i<FACTIONS.length;i++){
+const f=FACTIONS[i];
+const val=STATE.factions[f]||0;
+const lvl=getFactionLevel(val);
+const pct=Math.max(0,Math.min(100,(val+100)/2));
+html+=`<div style="margin:6px 0"><div class="stat-row"><span>${f}</span><span style="color:${lvl.color}">${lvl.name} (${val>0?'+':''}${val})</span></div><div class="faction-bar"><div class="faction-fill" style="width:${pct}%;background:${lvl.color}"></div></div></div>`;
+}
+html+='<p style="font-size:.72em;color:#8a8aaa;margin-top:8px">Gain faction from quests & killing enemy faction bosses. Faction affects shop prices.</p>';
+document.getElementById('factionContent').innerHTML=html;
+}
+
+// ══════════════════ INIT ══════════════════
 document.getElementById('tapZone').addEventListener('click',()=>{if(!STATE.autoAttack)attack()});
 document.getElementById('startBtn').addEventListener('click',startGame);
 renderRaces();updatePlayerDisplay();
