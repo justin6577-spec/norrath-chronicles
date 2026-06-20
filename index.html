@@ -340,6 +340,9 @@ document.getElementById('zoneSelectBtn').addEventListener('click', ()=>switchScr
 
 renderRaces();
 updatePlayerDisplay();
+
+// Register service worker for offline play
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
 </script>
 </body>
 </html>
